@@ -85,6 +85,10 @@ local master_postinit = function(inst)
 	inst.components.sanity.custom_rate_fn = sanityfn
 	inst.components.talker.special_speech = true
 	
+	--Lowers sanity of people around him.
+	inst:AddComponent("sanityaura")
+    inst.components.sanityaura.aura = -TUNING.SANITYAURA_TINY
+	
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 3
 	
