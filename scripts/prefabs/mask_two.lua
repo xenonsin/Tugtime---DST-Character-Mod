@@ -31,8 +31,6 @@ local function turnoff(inst)
 	if inst.components.fueled ~= nil then
         inst.components.fueled:StopConsuming()
     end
-
-			print("turned off")
 	if inst._light ~= nil then
         if inst._light:IsValid() then
 
@@ -128,12 +126,14 @@ local function pickup(inst, owner, destroy)
 			--item.Transform:SetScale(1, 1, 1)
 			--bug: carrots and flowers still there..
 			--v.components.pickable:MakeEmpty()
+
 			v.components.pickable:Pick(owner)
+			
 		end
-	
+
 	
         if v.components.inventoryitem and v.components.inventoryitem.canbepickedup and v.components.inventoryitem.cangoincontainer and not
-            v.components.inventoryitem:IsHeld() then
+            v.components.inventoryitem:IsHeld() and not v:HasTag("projectile") and not v:HasTag("thrown")  then
 
             if not owner.components.inventory:IsFull() then
                 --Your inventory isn't full, you can pick something up.

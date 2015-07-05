@@ -30,8 +30,6 @@ local function turnoff(inst)
 	if inst.components.fueled ~= nil then
         inst.components.fueled:StopConsuming()
     end
-
-			print("turned off")
 	if inst._light ~= nil then
         if inst._light:IsValid() then
 
