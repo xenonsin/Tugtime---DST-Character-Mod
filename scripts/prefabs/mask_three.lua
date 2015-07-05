@@ -13,47 +13,75 @@ local prefabs =
 }
 
 local function turnon(inst)
-    inst.Light:Enable(true)
-    inst.Light:SetRadius(4)
-    inst.Light:SetFalloff(.8)
-    inst.Light:SetIntensity(.7)
-    inst.Light:SetColour(245/255,255/255,245/255)
+		
+		print("turned on")
+    if not inst.components.fueled:IsEmpty() then
+		local owner = inst.components.inventoryitem ~= nil and inst.components.inventoryitem.owner or nil
+		if inst._light == nil or not inst._light:IsValid() then
+			inst._light = SpawnPrefab("nightvision")
+		end		
+		
+		inst._light.entity:SetParent((owner or inst).entity)
+		--inst._light.Transform:SetPosition(0,2,0)
+	end
 end
  
 local function turnoff(inst)
+	if inst.components.fueled ~= nil then
+        inst.components.fueled:StopConsuming()
+    end
 
-    inst.Light:Enable(false)
+			print("turned off")
+	if inst._light ~= nil then
+        if inst._light:IsValid() then
+
+            inst._light:Remove()
+        end
+        inst._light = nil
+    end
+end
+
+local function fuelupdate(inst)
+		if TheWorld.state.phase == "day" then
+			if inst._light ~= nil then
+				turnoff(inst)
+			end
+		elseif TheWorld.state.phase == "dusk" or TheWorld.state.phase == "night" then
+				turnon(inst)
+			
+		end
+
+	
+end
+ 
+local function OnRemove(inst)
+    if inst._light ~= nil and inst._light:IsValid() then
+        inst._light:Remove()
+    end
 end
  
 local function ondropped(inst)
-    turnoff(inst)   
-end
- 
-local function onpickup(inst)
-    turnon(inst)
-end
- 
-local function onputininventory(inst)
     turnoff(inst)
 end
 
 local function nofuel(inst)
-    local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
-    if owner then
-        owner:PushEvent("torchranout", {torch = inst})
+	local equippable = inst.components.equippable
+	if equippable ~= nil and equippable:IsEquipped() then
+		local owner = inst.components.inventoryitem ~= nil and inst.components.inventoryitem.owner or nil
+		if owner ~= nil then
+			local data =
+				{
+					prefab = inst.prefab,
+					equipslot = equippable.equipslot,
+				}
+			turnoff(inst)
+			owner:PushEvent("torchranout", {torch = inst})
+			return
+		end
     end
- 
-    turnoff(inst)
+	turnoff(inst)
 end
 
-
-local function manageNightVision(inst)
-	if TheWorld.state.phase == "day" then
-    turnoff(inst)
-	elseif TheWorld.state.phase == "night"  and inst.components.equippable:IsEquipped() then
-	turnon(inst)
-	end
-end
 
 local function sanityfnneg(inst)
 	return -10
@@ -75,18 +103,17 @@ local function OnEquip(inst, owner)
     owner.AnimState:Show("HAT_HAIR")
     owner.AnimState:Hide("HAIR_NOHAT")
     owner.AnimState:Hide("HAIR")
-	manageNightVision(inst)	
  
     if owner:HasTag("player") then
         owner.AnimState:Hide("HEAD")
         owner.AnimState:Show("HEAD_HAT")
     end
 	--Start consuming fuel
-	if not inst.components.fueled:IsEmpty() then
-        if inst.components.fueled then
-            inst.components.fueled:StartConsuming()
-        end
-    end
+	if owner ~= nil and inst.components.equippable:IsEquipped() then
+		if inst.components.fueled ~= nil then
+				inst.components.fueled:StartConsuming()
+		end
+	end
 	
 	--Stop draining sanity
 	if owner and owner.components.sanity then
@@ -96,14 +123,14 @@ local function OnEquip(inst, owner)
 	--Increase Max HP
 	if owner and owner.components.health then
 		owner.components.health:SetMaxHealth(100)
-        owner:PushEvent("minhealth")
-    
+        --We do this to trigger the GUI update.
+		owner.components.health:DoDelta(0)
 	end
 	
 	--heal automatically
 	--inst.task = inst:DoPeriodicTask(10, healowner, nil, owner)
 	
-
+	fuelupdate(inst)
 end
 
 local function OnUnequip(inst, owner) 
@@ -130,7 +157,8 @@ local function OnUnequip(inst, owner)
 	--Decrease Max HP back to regular
 	if owner and owner.components.health then
 		owner.components.health:SetMaxHealth(50)
-		owner:PushEvent("minhealth")
+		--We do this to trigger the GUI update.
+		owner.components.health:DoDelta(0)
 	end
 	
 	--Cancel all Tasks
@@ -146,8 +174,29 @@ end
 
 local function takefuel(inst)
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
-        manageNightVision(inst)
+        turnon(inst)
     end
+end
+
+local function nightvisionfn()
+    local inst = CreateEntity()
+    inst.entity:AddTransform()
+    inst.entity:AddLight()
+    inst.entity:AddNetwork()
+
+    inst:AddTag("FX")
+
+    inst.Light:SetColour(245/255,255/255,245/255)
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
+    inst.persists = false
+
+    return inst
 end
 
 local function fn()
@@ -165,10 +214,15 @@ local function fn()
     inst.AnimState:PlayAnimation("idle")
 
     inst:AddTag("hat")
+	
+	inst.entity:SetPristine()
+    if not TheWorld.ismastersim then
+        return inst
+    end
 
     inst:AddComponent("inspectable")
 
-    inst:AddComponent("tradable")
+    --inst:AddComponent("tradable")
 
     inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.keepondeath = true
@@ -184,7 +238,7 @@ local function fn()
 	inst.components.fueled.fueltype = "CURSED"
 	inst.components.fueled:InitializeFuelLevel(4800)
 	inst.components.fueled:SetDepletedFn(nofuel)
-	inst.components.fueled:SetUpdateFn(manageNightVision)
+	inst.components.fueled:SetUpdateFn(fuelupdate)
 	inst.components.fueled.ontakefuelfn = takefuel
 	inst.components.fueled.accepting = true
 	
@@ -197,24 +251,11 @@ local function fn()
  
     inst.components.characterspecific:SetOwner("tugtime")
     inst.components.characterspecific:SetStorable(true)
-    inst.components.characterspecific:SetComment("These seem heavier than they look.") 
+    inst.components.characterspecific:SetComment("It's too creepy looking.") 
  
-
-	inst:WatchWorldState( "startday", function(inst) manageNightVision(inst) end )
-	inst:WatchWorldState( "startnight", function(inst) manageNightVision(inst) end )
-	
+	inst._light = nil
     MakeHauntableLaunch(inst)
-	
-	inst.entity:AddLight()
-	inst.Light:SetColour(187/255, 15/255, 23/255)
-	manageNightVision(inst)
-	
-	    inst.entity:SetPristine()
-    if not TheWorld.ismastersim then
-        return inst
-    end
-	
-	inst.persists = false
+	inst.OnRemoveEntity = OnRemove
 
     return inst
 end
@@ -223,4 +264,5 @@ end
 
 
 
-return  Prefab("common/inventory/mask_three", fn, assets, prefabs)
+return  Prefab("common/inventory/mask_three", fn, assets, prefabs),
+Prefab ("common/inventory/nightvision", nightvisionfn)
