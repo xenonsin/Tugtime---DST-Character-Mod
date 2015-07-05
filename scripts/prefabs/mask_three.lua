@@ -13,8 +13,6 @@ local prefabs =
 }
 
 local function turnon(inst)
-		
-		print("turned on")
     if not inst.components.fueled:IsEmpty() then
 		local owner = inst.components.inventoryitem ~= nil and inst.components.inventoryitem.owner or nil
 		if inst._light == nil or not inst._light:IsValid() then

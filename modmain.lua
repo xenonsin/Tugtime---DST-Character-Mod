@@ -85,8 +85,8 @@ local Ingredient = GLOBAL.Ingredient
 AddRecipe("mask_two", {Ingredient("walrus_tusk", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_two.xml", "mask_two.tex")
 
--- Angry Mask
-STRINGS.NAMES.MASK_THREE = "Angry Mask"
+-- Sad Mask
+STRINGS.NAMES.MASK_THREE = "Sad Mask"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_THREE = "This is the third mask."
 GLOBAL.STRINGS.RECIPE_DESC.MASK_THREE = " Adds 50 to Max Health."	
 local Ingredient = GLOBAL.Ingredient 
