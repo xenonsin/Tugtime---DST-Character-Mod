@@ -74,7 +74,7 @@ STRINGS.NAMES.MASK_ONE = "Surprised Mask"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_ONE = "This is the first mask."
 GLOBAL.STRINGS.RECIPE_DESC.MASK_ONE = "Nothing special. Starting item."	
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("mask_one", {Ingredient("gears", 5)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("mask_one", {Ingredient("gears", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_one.xml", "mask_one.tex")
 
 -- Happy Mask
@@ -82,7 +82,7 @@ STRINGS.NAMES.MASK_TWO = "Happy Mask"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_TWO = "This is the second mask."
 GLOBAL.STRINGS.RECIPE_DESC.MASK_TWO = "Makes picking resources instantly and gains extra move speed."	
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("mask_two", {Ingredient("walrus_tusk", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("mask_two", {Ingredient("walrus_tusk", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_two.xml", "mask_two.tex")
 
 -- Angry Mask

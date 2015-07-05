@@ -45,13 +45,10 @@ end
 
 local function fuelupdate(inst)
 		if TheWorld.state.phase == "day" then
-			print("determined to be off")
 			if inst._light ~= nil then
 				turnoff(inst)
 			end
 		elseif TheWorld.state.phase == "dusk" or TheWorld.state.phase == "night" then
-
-				print("determined to be on")
 				turnon(inst)
 			
 		end
@@ -62,13 +59,11 @@ end
  
 local function OnRemove(inst)
     if inst._light ~= nil and inst._light:IsValid() then
-		print("removed")
         inst._light:Remove()
     end
 end
 
 local function ondropped(inst)
-	print("dropped")
     turnoff(inst)
 end
 
@@ -87,7 +82,6 @@ local function nofuel(inst)
 			return
 		end
     end
-	print("no more fuel, turned off")
 	turnoff(inst)
 end
 
@@ -122,8 +116,6 @@ local function OnEquip(inst, owner)
 				inst.components.fueled:StartConsuming()
 			end
 		end
-	
-	print("equiped now fuelupdate")
 	fuelupdate(inst)
 
 end
@@ -148,7 +140,6 @@ local function OnUnequip(inst, owner)
 	end
 	
 	--Turn Off Light
-	print("on unequip")
 	turnoff(inst)
      
 end
@@ -161,7 +152,6 @@ end
 
 local function nightvisionfn()
     local inst = CreateEntity()
-	print ("create light")
     inst.entity:AddTransform()
     inst.entity:AddLight()
     inst.entity:AddNetwork()

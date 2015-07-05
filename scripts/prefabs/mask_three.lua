@@ -228,6 +228,8 @@ local function fn()
 	inst.components.inventoryitem.keepondeath = true
     inst.components.inventoryitem.imagename = "mask_three"
     inst.components.inventoryitem.atlasname = "images/inventory/mask_three.xml"
+	inst.components.inventoryitem:SetOnDroppedFn(ondropped)
+    inst.components.inventoryitem:SetOnPutInInventoryFn(turnoff)
 		    
     inst:AddComponent("equippable")
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
