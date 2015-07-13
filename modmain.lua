@@ -42,7 +42,7 @@ local STRINGS = GLOBAL.STRINGS
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.tugtime = "The Masked Shadow"
 STRINGS.CHARACTER_NAMES.tugtime = "Tugtime"
-STRINGS.CHARACTER_DESCRIPTIONS.tugtime = "*Equip a mask ASAP. Fuel lasts 10 days.\n*Doesn't speak. Deals x3 damage.\n*Hunger 100, Sanity 200, Health 50."
+STRINGS.CHARACTER_DESCRIPTIONS.tugtime = "*Cannot solve '1 + 1' without a mask\n*Not afraid of the dark\n*Loves staring at you because you are cute"
 STRINGS.CHARACTER_QUOTES.tugtime = "\"Such is Life.\""
 
 -- Custom speech strings
@@ -66,31 +66,31 @@ GLOBAL.FUELTYPE.CURSED = "CURSED"
 STRINGS.NAMES.CURSED_FUEL = "Cursed Fuel"
 GLOBAL.STRINGS.RECIPE_DESC.CURSED_FUEL = "Masks need fuel? Go figure."
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("cursed_fuel", {Ingredient("livinglog", 6)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("cursed_fuel", {Ingredient("livinglog", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/cursed_fuel.xml", "cursed_fuel.tex")
 
 -- Surprised Mask
 STRINGS.NAMES.MASK_ONE = "Surprised Mask"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_ONE = "This is the first mask."
-GLOBAL.STRINGS.RECIPE_DESC.MASK_ONE = "Nothing special. Starting item."	
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_ONE = "Surprise!"
+GLOBAL.STRINGS.RECIPE_DESC.MASK_ONE = "Gives night light like other masks."	
 local Ingredient = GLOBAL.Ingredient 
 AddRecipe("mask_one", {Ingredient("gears", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_one.xml", "mask_one.tex")
 
 -- Happy Mask
 STRINGS.NAMES.MASK_TWO = "Happy Mask"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_TWO = "This is the second mask."
-GLOBAL.STRINGS.RECIPE_DESC.MASK_TWO = "Makes picking resources instantly and gains extra move speed."	
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_TWO = "Smile!"
+GLOBAL.STRINGS.RECIPE_DESC.MASK_TWO = "Auto loots."	
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("mask_two", {Ingredient("walrus_tusk", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("mask_two", {Ingredient("walrus_tusk", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_two.xml", "mask_two.tex")
 
 -- Sad Mask
 STRINGS.NAMES.MASK_THREE = "Sad Mask"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_THREE = "This is the third mask."
-GLOBAL.STRINGS.RECIPE_DESC.MASK_THREE = " Adds 50 to Max Health."	
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_THREE = "Aww..."
+GLOBAL.STRINGS.RECIPE_DESC.MASK_THREE = " Adds sanity aura."	
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("mask_three", {Ingredient("bearger_fur", 1)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("mask_three", {Ingredient("bearger_fur", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_three.xml", "mask_three.tex")
 
 AddMinimapAtlas("images/map_icons/tugtime.xml")

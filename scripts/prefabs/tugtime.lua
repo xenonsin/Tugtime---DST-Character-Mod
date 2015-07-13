@@ -38,14 +38,14 @@ local prefabs = {}
 
 -- Custom starting items
 local start_inv = {
-	"mask_one", "boomerang", "boomerang",
+	"mask_one",
 }
 
 -- When the character is revived from human
 local function onbecamehuman(inst)
 	-- Set speed when loading or reviving from ghost (optional)
-	inst.components.locomotor.walkspeed = 4
-	inst.components.locomotor.runspeed = 6
+	inst.components.locomotor.walkspeed = 6
+	inst.components.locomotor.runspeed = 8
 end
 
 -- When loading or spawning the character
@@ -79,18 +79,18 @@ local master_postinit = function(inst)
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
 	
 	-- Stats	
-	inst.components.health:SetMaxHealth(50)
+	inst.components.health:SetMaxHealth(100)
 	inst.components.hunger:SetMax(100)
-	inst.components.sanity:SetMax(200)
+	inst.components.sanity:SetMax(100)
 	inst.components.sanity.custom_rate_fn = sanityfn
 	inst.components.talker.special_speech = true
 	
-	--Lowers sanity of people around him.
+	--Has a sanity aura, currently 0 so that it can be affected by mask_three
 	inst:AddComponent("sanityaura")
-    inst.components.sanityaura.aura = -TUNING.SANITYAURA_TINY
+    inst.components.sanityaura.aura = 0
 	
 	-- Damage multiplier (optional)
-    inst.components.combat.damagemultiplier = 3
+    inst.components.combat.damagemultiplier = 1
 	
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE

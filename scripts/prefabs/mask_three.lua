@@ -116,12 +116,17 @@ local function OnEquip(inst, owner)
 		owner.components.sanity.custom_rate_fn = sanityfnpos
 	end
 	
-	--Increase Max HP
-	if owner and owner.components.health then
-		owner.components.health:SetMaxHealth(100)
-        --We do this to trigger the GUI update.
-		owner.components.health:DoDelta(0)
+	--Give the sanity Aura boost
+	if owner and owner.components.sanityaura then
+		owner.components.sanityaura.aura = 3
 	end
+	
+	--Increase Max HP
+	--if owner and owner.components.health then
+		--owner.components.health:SetMaxHealth(100)
+        --We do this to trigger the GUI update.
+		--owner.components.health:DoDelta(0)
+	--end
 	
 	--heal automatically
 	--inst.task = inst:DoPeriodicTask(10, healowner, nil, owner)
@@ -151,10 +156,15 @@ local function OnUnequip(inst, owner)
 	end
 	
 	--Decrease Max HP back to regular
-	if owner and owner.components.health then
-		owner.components.health:SetMaxHealth(50)
+	--if owner and owner.components.health then
+		--owner.components.health:SetMaxHealth(50)
 		--We do this to trigger the GUI update.
-		owner.components.health:DoDelta(0)
+		--owner.components.health:DoDelta(0)
+	--end
+	
+	--Give the sanity Aura boost
+	if owner and owner.components.sanityaura then
+		owner.components.sanityaura.aura = 0
 	end
 	
 	--Cancel all Tasks
@@ -234,11 +244,15 @@ local function fn()
 	
 	inst:AddComponent("fueled")
 	inst.components.fueled.fueltype = "CURSED"
-	inst.components.fueled:InitializeFuelLevel(4800)
+	inst.components.fueled:InitializeFuelLevel(2400)
 	inst.components.fueled:SetDepletedFn(nofuel)
 	inst.components.fueled:SetUpdateFn(fuelupdate)
 	inst.components.fueled.ontakefuelfn = takefuel
 	inst.components.fueled.accepting = true
+	
+	--Sanity Aura. Negative value for insanity aura.
+	--inst:AddComponent("sanityaura")
+    --inst.components.equippable.sanityaura.aura = 8
 	
     --inst:AddComponent("armor")
     --inst.components.armor:InitCondition(9 * 9999999999, TUNING.ARMORGRASS_ABSORPTION *  0.4)

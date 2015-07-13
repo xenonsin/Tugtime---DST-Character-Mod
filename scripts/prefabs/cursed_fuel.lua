@@ -27,7 +27,7 @@ local function fn()
 	
     inst:AddComponent("fuel")
     inst.components.fuel.fueltype = "CURSED"
-    inst.components.fuel.fuelvalue = 4800
+    inst.components.fuel.fuelvalue = 1920
 
  
     inst:AddComponent("inspectable")

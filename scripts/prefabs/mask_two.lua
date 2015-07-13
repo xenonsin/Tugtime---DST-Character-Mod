@@ -125,7 +125,7 @@ local function pickup(inst, owner, destroy)
 			--bug: carrots and flowers still there..
 			--v.components.pickable:MakeEmpty()
 
-			v.components.pickable:Pick(owner)
+			--v.components.pickable:Pick(owner)
 			
 		end
 
@@ -295,11 +295,11 @@ local function fn()
     inst.components.equippable:SetOnUnequip(OnUnequip)
 	
 	--SPEEEEEED
-	inst.components.equippable.walkspeedmult = 2
+	--inst.components.equippable.walkspeedmult = 2
 	
 	inst:AddComponent("fueled")
 	inst.components.fueled.fueltype = "CURSED"
-	inst.components.fueled:InitializeFuelLevel(4800)
+	inst.components.fueled:InitializeFuelLevel(2400)
 	inst.components.fueled:SetDepletedFn(nofuel)
 	inst.components.fueled:SetUpdateFn(fuelupdate)
 	inst.components.fueled.ontakefuelfn = takefuel

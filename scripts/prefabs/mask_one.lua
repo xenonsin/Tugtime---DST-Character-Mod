@@ -205,7 +205,7 @@ local function fn()
 	
 	inst:AddComponent("fueled")
 	inst.components.fueled.fueltype = "CURSED"
-	inst.components.fueled:InitializeFuelLevel(4800)
+	inst.components.fueled:InitializeFuelLevel(2400)
 	inst.components.fueled:SetDepletedFn(nofuel)
 	inst.components.fueled:SetUpdateFn(fuelupdate)
 	inst.components.fueled.ontakefuelfn = takefuel

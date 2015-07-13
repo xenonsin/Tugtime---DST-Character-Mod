@@ -1,8 +1,8 @@
 -- This information tells other players more about the mod
 name = "Tugtime"
-description = "The shadow cometh!"
+description = "Tug Tug Tugs!"
 author = "Keno"
-version = "1.2.4" -- This is the version of the template. Change it to your own number.
+version = "2.1.9" -- This is the version of the template. Change it to your own number.
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 forumthread = ""
