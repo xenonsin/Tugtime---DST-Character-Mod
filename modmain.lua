@@ -9,7 +9,7 @@ use "data/actions/init"
 use "data/components/init"
 
 PrefabFiles = {
-	"tugtime", "mask_one", "cursed_fuel", "mask_two", "mask_three", "nightvision"
+	"tugtime", "mask_one", "mask_two", "mask_three", "nightvision"
 }
 
 Assets = {
@@ -62,19 +62,19 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.TUGTIME =
 }
 
 --Cursed Fuel
-GLOBAL.FUELTYPE.CURSED = "CURSED" 
-STRINGS.NAMES.CURSED_FUEL = "Cursed Fuel"
-GLOBAL.STRINGS.RECIPE_DESC.CURSED_FUEL = "Masks need fuel? Go figure."
-local Ingredient = GLOBAL.Ingredient 
-AddRecipe("cursed_fuel", {Ingredient("livinglog", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
-"images/inventory/cursed_fuel.xml", "cursed_fuel.tex")
+--GLOBAL.FUELTYPE.CURSED = "CURSED" 
+--STRINGS.NAMES.CURSED_FUEL = "Cursed Fuel"
+--GLOBAL.STRINGS.RECIPE_DESC.CURSED_FUEL = "Masks need fuel? Go figure."
+--local Ingredient = GLOBAL.Ingredient 
+--AddRecipe("cursed_fuel", {Ingredient("livinglog", 3)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+--"images/inventory/cursed_fuel.xml", "cursed_fuel.tex")
 
 -- Surprised Mask
 STRINGS.NAMES.MASK_ONE = "Surprised Mask"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MASK_ONE = "Surprise!"
 GLOBAL.STRINGS.RECIPE_DESC.MASK_ONE = "Gives night light like other masks."	
 local Ingredient = GLOBAL.Ingredient 
-AddRecipe("mask_one", {Ingredient("gears", 2)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
+AddRecipe("mask_one", {Ingredient("livinglog", 4)}, GLOBAL.RECIPETABS.MAGIC, GLOBAL.TECH.NONE, nil, nil, nil, nil, nil,
 "images/inventory/mask_one.xml", "mask_one.tex")
 
 -- Happy Mask

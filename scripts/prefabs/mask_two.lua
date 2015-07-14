@@ -13,7 +13,7 @@ local prefabs =
 }
 
 local function turnon(inst)
-    if not inst.components.fueled:IsEmpty() then
+    if not inst.components.expirable:IsEmpty() then
 		local owner = inst.components.inventoryitem ~= nil and inst.components.inventoryitem.owner or nil
 		if inst._light == nil or not inst._light:IsValid() then
 			inst._light = SpawnPrefab("nightvision")
@@ -26,9 +26,6 @@ end
 
  
 local function turnoff(inst)
-	if inst.components.fueled ~= nil then
-        inst.components.fueled:StopConsuming()
-    end
 	if inst._light ~= nil then
         if inst._light:IsValid() then
 
@@ -178,13 +175,6 @@ local function OnEquip(inst, owner)
         owner.AnimState:Show("HEAD_HAT")
     end
 	
-	--Start consuming fuel
-	if owner ~= nil and inst.components.equippable:IsEquipped() then
-		if inst.components.fueled ~= nil then
-				inst.components.fueled:StartConsuming()
-		end
-	end
-	
 	--Stop draining sanity
 	if owner and owner.components.sanity then
 		owner.components.sanity.custom_rate_fn = sanityfnpos
@@ -207,11 +197,6 @@ local function OnUnequip(inst, owner)
     if owner:HasTag("player") then
         owner.AnimState:Show("HEAD")
         owner.AnimState:Hide("HEAD_HAT")
-    end
-	
-	--Stop Draining fuel.
-	if inst.components.fueled then
-        inst.components.fueled:StopConsuming()        
     end
 	
 	--Return Tugtime to his regular sanity rate.
@@ -297,13 +282,19 @@ local function fn()
 	--SPEEEEEED
 	--inst.components.equippable.walkspeedmult = 2
 	
-	inst:AddComponent("fueled")
-	inst.components.fueled.fueltype = "CURSED"
-	inst.components.fueled:InitializeFuelLevel(2400)
-	inst.components.fueled:SetDepletedFn(nofuel)
-	inst.components.fueled:SetUpdateFn(fuelupdate)
-	inst.components.fueled.ontakefuelfn = takefuel
-	inst.components.fueled.accepting = true
+	--inst:AddComponent("fueled")
+	--inst.components.fueled.fueltype = "CURSED"
+	--inst.components.fueled:InitializeFuelLevel(2400)
+	--inst.components.fueled:SetDepletedFn(nofuel)
+	--inst.components.fueled:SetUpdateFn(fuelupdate)
+	--inst.components.fueled.ontakefuelfn = takefuel
+	--inst.components.fueled.accepting = true
+	
+	inst:AddComponent("expirable")
+    inst.components.expirable:InitializeFuelLevel(2400)
+    inst.components.expirable:SetDepletedFn(--[[generic_perish]]inst.Remove)
+	inst.components.expirable:SetUpdateFn(fuelupdate)
+	inst.components.expirable:StartConsuming()
 	
     --inst:AddComponent("armor")
     --inst.components.armor:InitCondition(9 * 9999999999, TUNING.ARMORGRASS_ABSORPTION *  0.4)

@@ -2,7 +2,7 @@
 name = "Tugtime"
 description = "Tug Tug Tugs!"
 author = "Keno"
-version = "2.1.9" -- This is the version of the template. Change it to your own number.
+version = "2.2.1" -- This is the version of the template. Change it to your own number.
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 forumthread = ""

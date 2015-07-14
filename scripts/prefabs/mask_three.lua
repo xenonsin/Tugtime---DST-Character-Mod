@@ -13,7 +13,7 @@ local prefabs =
 }
 
 local function turnon(inst)
-    if not inst.components.fueled:IsEmpty() then
+    if not inst.components.expirable:IsEmpty() then
 		local owner = inst.components.inventoryitem ~= nil and inst.components.inventoryitem.owner or nil
 		if inst._light == nil or not inst._light:IsValid() then
 			inst._light = SpawnPrefab("nightvision")
@@ -25,9 +25,7 @@ local function turnon(inst)
 end
  
 local function turnoff(inst)
-	if inst.components.fueled ~= nil then
-        inst.components.fueled:StopConsuming()
-    end
+
 	if inst._light ~= nil then
         if inst._light:IsValid() then
 
@@ -105,11 +103,11 @@ local function OnEquip(inst, owner)
         owner.AnimState:Show("HEAD_HAT")
     end
 	--Start consuming fuel
-	if owner ~= nil and inst.components.equippable:IsEquipped() then
-		if inst.components.fueled ~= nil then
-				inst.components.fueled:StartConsuming()
-		end
-	end
+	--if owner ~= nil and inst.components.equippable:IsEquipped() then
+	--	if inst.components.fueled ~= nil then
+	--			inst.components.fueled:StartConsuming()
+	--	end
+	--end
 	
 	--Stop draining sanity
 	if owner and owner.components.sanity then
@@ -146,9 +144,9 @@ local function OnUnequip(inst, owner)
     end
 	
 	--Stop Draining fuel.
-	if inst.components.fueled then
-        inst.components.fueled:StopConsuming()        
-    end
+	--if inst.components.fueled then
+    --    inst.components.fueled:StopConsuming()        
+    --end
 	
 	--Return Tugtime to his regular sanity rate.
 	if owner and owner.components.sanity then
@@ -242,13 +240,19 @@ local function fn()
     inst.components.equippable:SetOnEquip(OnEquip)
     inst.components.equippable:SetOnUnequip(OnUnequip)
 	
-	inst:AddComponent("fueled")
-	inst.components.fueled.fueltype = "CURSED"
-	inst.components.fueled:InitializeFuelLevel(2400)
-	inst.components.fueled:SetDepletedFn(nofuel)
-	inst.components.fueled:SetUpdateFn(fuelupdate)
-	inst.components.fueled.ontakefuelfn = takefuel
-	inst.components.fueled.accepting = true
+	--inst:AddComponent("fueled")
+	--inst.components.fueled.fueltype = "CURSED"
+	--inst.components.fueled:InitializeFuelLevel(2400)
+	--inst.components.fueled:SetDepletedFn(nofuel)
+	--inst.components.fueled:SetUpdateFn(fuelupdate)
+	--inst.components.fueled.ontakefuelfn = takefuel
+	--inst.components.fueled.accepting = true
+	
+	inst:AddComponent("expirable")
+    inst.components.expirable:InitializeFuelLevel(2400)
+    inst.components.expirable:SetDepletedFn(--[[generic_perish]]inst.Remove)
+	inst.components.expirable:SetUpdateFn(fuelupdate)
+	inst.components.expirable:StartConsuming()
 	
 	--Sanity Aura. Negative value for insanity aura.
 	--inst:AddComponent("sanityaura")
