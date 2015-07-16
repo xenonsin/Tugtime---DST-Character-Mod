@@ -38,7 +38,7 @@ local prefabs = {}
 
 -- Custom starting items
 local start_inv = {
-	"mask_one",
+	"mask_one", "livinglog", "livinglog", "livinglog", "livinglog", 
 }
 
 -- When the character is revived from human
